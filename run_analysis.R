@@ -30,7 +30,9 @@ dim(feature_vector)
 feature_vector<-feature_vector[[2]]
 names(x_unique)<-feature_vector
 #    I Extract the measures on the mean and standard deviation
-mean_std<-grep("-mean|std()",feature_vector)
+mean_std1<-grep("-mean()",feature_vector,fixed=T)
+mean_std2<-grep("-std()",feature_vector,fixed=T)
+mean_std<-sort(c(mean_std1,mean_std2)); rm(mean_std1); rm(mean_std2)
 x_unique<-x_unique[,mean_std]
 #    I check my new dimensions and remove useless variables
 dim(x_unique); rm(mean_std); rm(feature_vector)
@@ -52,7 +54,7 @@ y_unique<-select(y_unique, -num, -activities)
 #4. Appropriately labels the data set with descriptive variable names.
 names(subject_unique)<-"subjects"
 #   Create a unique data set with all the names
-unique<-cbind(subject_unique,y_unique,x_unique)
+unique<-data.frame(subject_unique,y_unique,x_unique)
 #   Remove useless variables
 rm(subject_unique); rm(x_unique); rm(y_unique)
 
